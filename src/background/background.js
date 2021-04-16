@@ -184,7 +184,7 @@ function textReplace(string, article, disallowedChars = null) {
   for (const key in article) {
     if (article.hasOwnProperty(key) && key != "content") {
       let s = (article[key] || '') + '';
-      if (s && disallowedChars) s = s.split('/').map(x => this.generateValidFileName(x, disallowedChars)).join('/');
+      if (s && disallowedChars) s = this.generateValidFileName(s, disallowedChars);
       string = string.split('{' + key + '}').join(s);
     }
   }
@@ -690,7 +690,6 @@ async function formatTitle(article) {
   let options = await getOptions();
   
   let title = textReplace(options.title, article, options.disallowedChars);
-  title = title.split('/').map(s=>generateValidFileName(s, options.disallowedChars)).join('/');
   return title;
 }
 
